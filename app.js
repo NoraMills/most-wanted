@@ -77,10 +77,10 @@ function searchByName(people) {
 // }
 
 function findFamily(person, people) {
-    let foundFamily = "";
+    let foundFamily = [];
     for (let i = 0; i < people.length; i++) {
         if (people[i].parents == person[0].id) {
-            foundFamily += people[i].firstName + " " + people[i].lastName + "\n";
+            foundFamily.push(people[i]);
         }
     }
     return foundFamily;
@@ -145,9 +145,15 @@ function displayPerson(person) {
     alert(personInfo);
 }
 
+// function displayFamily(personFamily) {
+//     alert("Found family members: " + personFamily);
+// }
 function displayFamily(personFamily) {
-    alert("Found family members: " + personFamily);
+    alert("Found Desendants: \n" + personFamily.map(function (person) {
+        return person.firstName + " " + person.lastName;
+    }).join("\n"));
 }
+
 
 function promptFor(question, valid) {
     do {
