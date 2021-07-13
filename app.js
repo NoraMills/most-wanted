@@ -16,23 +16,26 @@ function app(people) {
             app(people);
             break;
     }
-    mainMenu(searchResults, people);
+    // convert an array to a single object for argument passing
+    let onePerson = searchResults[0]
+    mainMenu(onePerson, people);
 }
-
+// argumnet this is an array of objects
+// pass in the object
 function mainMenu(person, people) {
     if (person.length == 0) {
         alert("Could not find that individual.");
         return app(people);
     }
 
-    let displayOption = promptFor("Found " + person[0].firstName + " " + person[0].lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'", autoValid);
+    let displayOption = promptFor("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'", autoValid);
 
     switch (displayOption) {
         case "info":
             displayPerson(person);
             break;
         case "family":
-            let personFamily = findFamily(person, people);
+            let personFamily = findFamily(person.id, people);
             displayFamily(personFamily);
             break;
         case "descendants":
@@ -63,26 +66,15 @@ function searchByName(people) {
     return foundPerson;
 }
 
-// function findFamily(person, people) {
-//     let personId = person[0].id;
-//     let foundFamily = people.filter(function (potentialMatch) {
-//         if (potentialMatch.parents === personId) {
-//             return true;
-//         }
-//         else {
-//             return false;
-//         }
-//     });
-//     return foundFamily;
-// }
-
 function findFamily(person, people) {
-    let foundFamily = [];
-    for (let i = 0; i < people.length; i++) {
-        if (people[i].parents == person[0].id) {
-            foundFamily.push(people[i]);
+    let foundFamily = people.filter(function (potentialMatch) {
+        if (potentialMatch.parents == person) {
+            return true;
         }
-    }
+        else {
+            return false;
+        }
+    });
     return foundFamily;
 }
 
