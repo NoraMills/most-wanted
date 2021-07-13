@@ -10,18 +10,16 @@ function app(people) {
             searchResults = searchByName(people);
             break;
         case 'no':
-
+            searchResults = searchByCriteria(people);
             break;
         default:
             app(people);
             break;
     }
-    // convert an array to a single object for argument passing
     let onePerson = searchResults[0]
     mainMenu(onePerson, people);
 }
-// argumnet this is an array of objects
-// pass in the object
+
 function mainMenu(person, people) {
     if (!person) {
         alert("Could not find that individual.");
@@ -52,6 +50,9 @@ function mainMenu(person, people) {
     }
 }
 
+
+//Search Functions
+
 function searchByName(people) {
     let firstName = promptFor("What is the person's first name?", autoValid);
     let lastName = promptFor("What is the person's last name?", autoValid);
@@ -65,6 +66,10 @@ function searchByName(people) {
         }
     })
     return foundPerson;
+}
+
+function searchByCriteria(people) {
+    let criteriaNumber = promptFor("How many criterion do you want to use? Enter 1 - 5", validateCriteriaNumber);
 }
 
 function findFamily(person, people) {
@@ -133,6 +138,9 @@ function searchBySpouse(people) {
 
 }
 
+
+//Display Functions
+
 function displayPeople(people) {
     alert(people.map(function (person) {
         return person.firstName + " " + person.lastName;
@@ -162,6 +170,9 @@ function displayDescendants(descendants) {
         return person.firstName + " " + person.lastName;
     }).join("\n"));
 }
+
+
+//Validation Functions
 
 function promptFor(question, valid) {
     do {
@@ -193,6 +204,14 @@ function validateGender(input) {
 
 function validateDisplayOptions(input) {
     if (input.toLowerCase() == "info" || input.toLowerCase() == "family" || input.toLowerCase() == "descendants" || input.toLowerCase() == "restart" || input.toLowerCase() == "quit") {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function validateCriteriaNumber(input) {
+    if (input > 0 && input < 6) {
         return true;
     } else {
         return false;
