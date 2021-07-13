@@ -28,7 +28,7 @@ function mainMenu(person, people) {
         return app(people);
     }
 
-    let displayOption = promptFor("Found " + person.firstName + " " + person.lastName + " .\n Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'", autoValid);
+    let displayOption = promptFor("Found " + person.firstName + " " + person.lastName + " .\n Do you want to know their 'info', 'family', or 'descendants'? \n Type the option you want or 'restart' or 'quit'", validateDisplayOptions);
 
     switch (displayOption) {
         case "info":
@@ -166,6 +166,14 @@ function autoValid(input) {
 
 function validateGender(input) {
     if (input.toLowerCase() == "male" || input.toLowerCase() == "female") {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function validateDisplayOptions(input) {
+    if (input.toLowerCase() == "info" || input.toLowerCase() == "family" || input.toLowerCase() == "descendants" || input.toLowerCase() == "restart" || input.toLowerCase() == "quit") {
         return true;
     } else {
         return false;
