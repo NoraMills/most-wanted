@@ -39,7 +39,8 @@ function mainMenu(person, people) {
             displayFamily(personFamily);
             break;
         case "descendants":
-            // TODO: get person's descendants
+            let descendants = findDescendants(person.id, people);
+            displayDescendants(descendants);
             break;
         case "restart":
             app(people); // restart
@@ -74,8 +75,21 @@ function findFamily(person, people) {
         else {
             return false;
         }
-    });
+    })
     return foundFamily;
+}
+
+function findDescendants(person, people) {
+    let foundDescendants = people.filter(function (potentialMatch) {
+        if (potentialMatch.parents[0] == person || potentialMatch.parents[1] == person) {
+            findDescendants(potentialMatch.id, people);
+            return true;
+        }
+        else {
+            return false;
+        }
+    })
+    return foundDescendants;
 }
 
 function searchByGender(people) {
@@ -142,7 +156,6 @@ function displayFamily(personFamily) {
         return person.firstName + " " + person.lastName;
     }).join("\n"));
 }
-
 
 function promptFor(question, valid) {
     do {
