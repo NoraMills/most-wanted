@@ -72,20 +72,25 @@ function searchByCriteria(people) {
     let criteriaNumber = promptFor("How many criterion do you want to use? Enter 1 - 5", validateCriteriaNumber);
     // let searchCriteria = [];
     let searchCriteria;
+    let searchCriterion = [];
     let criteriaResults = [];
-    if (criteriaNumber >= 1) {
+    let criterionInput = [];
+    if (criteriaNumber == 1) {
         searchCriteria = promptFor("Which criteria would you like to search for? Enter gender, eyecolor, height, weight, dob, occupation", validateSearchCriteria);
         criteriaResults = searchChoices(searchCriteria, people);
-    }
-    if (criteriaNumber >= 2) {
-
+    } else {
+        for (let i = 0; i < criteriaNumber; i++) {
+            searchCriterion.push(promptFor("Which criteria would you like to search for? Enter gender, eyecolor, height, weight, dob, occupation", validateSearchCriteria));
+            criterionInput.push(prompt("What is the person's " + searchCriterion[i]));
+        }
+        criteriaResults = searchMultiples(searchCriterion, people, criterionInput);
     }
     displayPeople(criteriaResults);
 }
 
 function findFamily(person, people) {
     let foundFamily = people.filter(function (potentialMatch) {
-        if (potentialMatch.parents == person) {
+        if (potentialMatch.parents == person || potentialMatch.spouse == person) {
             return true;
         }
         else {
@@ -135,6 +140,59 @@ function searchChoices(searchCriteria, people) {
     return criteriaResults;
 }
 
+function searchMultiples(searchCriterion, people, input) {
+    let results;
+    for (let i = 0; i < searchCriterion.length; i++) {
+        let dataInput = input[i];
+        results = people.filter(function (potentialMatch) {
+
+            if (searchCriterion[i] == "gender") {
+                if (potentialMatch.gender == dataInput) {
+                    return true
+                } else {
+                    return false;
+                }
+            }
+            if (searchCriterion[i] == "eyecolor") {
+                if (potentialMatch.eyeColor == dataInput) {
+                    return true
+                } else {
+                    return false;
+                }
+            }
+            if (searchCriterion[i] == "height") {
+                if (potentialMatch.height == dataInput) {
+                    return true
+                } else {
+                    return false;
+                }
+            }
+            if (searchCriterion[i] == "weight") {
+                if (potentialMatch.weight == dataInput) {
+                    return true
+                } else {
+                    return false;
+                }
+            }
+            if (searchCriterion[i] == "dob") {
+                if (potentialMatch.dob == dataInput) {
+                    return true
+                } else {
+                    return false;
+                }
+            }
+            if (searchCriterion[i] == "occupation") {
+                if (potentialMatch.occupation == dataInput) {
+                    return true
+                } else {
+                    return false;
+                }
+            }
+        })
+    }
+    return results;
+}
+
 function searchByGender(people) {
     let gender = promptFor("What is the person's gender", validateGender);
 
@@ -150,7 +208,7 @@ function searchByGender(people) {
 }
 
 function searchByDoB(people) {
-    let dob = promptFor("What is the person's dob?  Enter M/D/YYYY", validateGender);
+    let dob = promptFor("What is the person's dob?  Enter MM/DD/YYYY", autoValid);
 
     let dobResults = people.filter(function (potentialMatch) {
         if (potentialMatch.dob == dob) {
@@ -308,7 +366,7 @@ function validateSearchCriteria(input) {
 }
 
 function validateNumber(input) {
-    if (input != isNAN) {
+    if (!isNaN(input)) {
         return true;
     } else {
         return false;
