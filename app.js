@@ -23,12 +23,12 @@ function app(people) {
 // argumnet this is an array of objects
 // pass in the object
 function mainMenu(person, people) {
-    if (person.length == 0) {
+    if (!person) {
         alert("Could not find that individual.");
         return app(people);
     }
 
-    let displayOption = promptFor("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'", autoValid);
+    let displayOption = promptFor("Found " + person.firstName + " " + person.lastName + " .\n Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'", autoValid);
 
     switch (displayOption) {
         case "info":
@@ -126,22 +126,19 @@ function displayPeople(people) {
 }
 
 function displayPerson(person) {
-    let personInfo = "First Name: " + person[0].firstName + "\n";
-    personInfo += "Last Name: " + person[0].lastName + "\n";
-    personInfo += "Gender: " + person[0].gender + "\n";
-    personInfo += "DoB: " + person[0].dob + "\n";
-    personInfo += "Height: " + person[0].height + "\n";
-    personInfo += "Weight: " + person[0].weight + "\n";
-    personInfo += "Eye-Color: " + person[0].eyeColor + "\n";
-    personInfo += "Occupation: " + person[0].occupation + "\n";
+    let personInfo = "First Name: " + person.firstName + "\n";
+    personInfo += "Last Name: " + person.lastName + "\n";
+    personInfo += "Gender: " + person.gender + "\n";
+    personInfo += "DoB: " + person.dob + "\n";
+    personInfo += "Height: " + person.height + "\n";
+    personInfo += "Weight: " + person.weight + "\n";
+    personInfo += "Eye-Color: " + person.eyeColor + "\n";
+    personInfo += "Occupation: " + person.occupation + "\n";
     alert(personInfo);
 }
 
-// function displayFamily(personFamily) {
-//     alert("Found family members: " + personFamily);
-// }
 function displayFamily(personFamily) {
-    alert("Found Desendants: \n" + personFamily.map(function (person) {
+    alert("Found Family: \n" + personFamily.map(function (person) {
         return person.firstName + " " + person.lastName;
     }).join("\n"));
 }
