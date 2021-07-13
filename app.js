@@ -157,6 +157,12 @@ function displayFamily(personFamily) {
     }).join("\n"));
 }
 
+function displayDescendants(descendants) {
+    alert("Found Descendants: \n" + descendants.map(function (person) {
+        return person.firstName + " " + person.lastName;
+    }).join("\n"));
+}
+
 function promptFor(question, valid) {
     do {
         var response = prompt(question).trim();
