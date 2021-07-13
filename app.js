@@ -70,6 +70,17 @@ function searchByName(people) {
 
 function searchByCriteria(people) {
     let criteriaNumber = promptFor("How many criterion do you want to use? Enter 1 - 5", validateCriteriaNumber);
+    // let searchCriteria = [];
+    let searchCriteria;
+    let criteriaResults = [];
+    if (criteriaNumber >= 1) {
+        searchCriteria = promptFor("Which criteria would you like to search for? Enter gender, eyecolor, height, weight, dob, occupation", validateSearchCriteria);
+        criteriaResults = searchChoices(searchCriteria, people);
+    }
+    if (criteriaNumber >= 2) {
+
+    }
+    displayPeople(criteriaResults);
 }
 
 function findFamily(person, people) {
@@ -97,45 +108,115 @@ function findDescendants(person, people) {
     return foundDescendants;
 }
 
+function searchChoices(searchCriteria, people) {
+    let criteriaResults = [];
+    switch (searchCriteria) {
+        case "gender":
+            criteriaResults = searchByGender(people);
+            break;
+        case "eyecolor":
+            criteriaResults = searchByEyeColor(people);
+            break;
+        case "height":
+            criteriaResults = searchByHeight(people);
+            break;
+        case "weight":
+            criteriaResults = searchByWeight(people);
+            break;
+        case "dob":
+            criteriaResults = searchByDoB(people);
+            break;
+        case "occupation":
+            criteriaResults = searchByOccupation(people);
+            break;
+        default:
+            break;
+    }
+    return criteriaResults;
+}
+
 function searchByGender(people) {
     let gender = promptFor("What is the person's gender", validateGender);
 
-    let foundPerson = people.filter(function (potentialMatch) {
-        if (potentialMatch.gender === gender) {
+    let genderResults = people.filter(function (potentialMatch) {
+        if (potentialMatch.gender == gender) {
             return true;
         }
         else {
             return false;
         }
     })
+    return genderResults;
 }
 
 function searchByDoB(people) {
+    let dob = promptFor("What is the person's dob?  Enter M/D/YYYY", validateGender);
 
+    let dobResults = people.filter(function (potentialMatch) {
+        if (potentialMatch.dob == dob) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    })
+    return dobResults;
 }
 
 function searchByHeight(people) {
+    let height = promptFor("What is the person's height?", validateNumber);
 
+    let heightResults = people.filter(function (potentialMatch) {
+        if (potentialMatch.height == height) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    })
+    return heightResults;
 }
 
 function searchByWeight(people) {
+    let weight = promptFor("What is the person's weight", validateNumber);
 
+    let weightResults = people.filter(function (potentialMatch) {
+        if (potentialMatch.weight == weight) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    })
+    return weightResults;
 }
 
 function searchByEyeColor(people) {
+    let eyeColor = promptFor("What is the person's eyeColor", autoValid);
 
+    let eyeColorResults = people.filter(function (potentialMatch) {
+        if (potentialMatch.eyeColor == eyeColor) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    })
+    return eyeColorResults;
 }
 
 function searchByOccupation(people) {
+    let occupation = promptFor("What is the person's occupation", autoValid);
 
-}
-
-function searchByParents(people) {
-
-}
-
-function searchBySpouse(people) {
-
+    let occupationResults = people.filter(function (potentialMatch) {
+        if (potentialMatch.occupation == occupation) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    })
+    return occupationResults;
 }
 
 
@@ -212,6 +293,22 @@ function validateDisplayOptions(input) {
 
 function validateCriteriaNumber(input) {
     if (input > 0 && input < 6) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function validateSearchCriteria(input) {
+    if (input.toLowerCase() == "gender" || input.toLowerCase() == "eyecolor" || input.toLowerCase() == "height" || input.toLowerCase() == "weight" || input.toLowerCase() == "dob" || input.toLowerCase() == "occupation") {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function validateNumber(input) {
+    if (input != isNAN) {
         return true;
     } else {
         return false;
