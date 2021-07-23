@@ -1,6 +1,6 @@
 "use strict"
 
-app(data);
+app(data).toLowerCase();
 
 function app(people) {
     let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
@@ -26,7 +26,7 @@ function mainMenu(person, people) {
         return app(people);
     }
 
-    let displayOption = promptFor("Found " + person.firstName + " " + person.lastName + " .\n Do you want to know their 'info', 'family', or 'descendants'? \n Type the option you want or 'restart' or 'quit'", validateDisplayOptions);
+    let displayOption = promptFor("Found " + person.firstName + " " + person.lastName + " .\n Do you want to know their 'info', 'family', or 'descendants'? \n Type the option you want or 'restart' or 'quit'", validateDisplayOptions).toLowerCase();
 
     switch (displayOption) {
         case "info":
@@ -54,11 +54,11 @@ function mainMenu(person, people) {
 //Search Functions
 
 function searchByName(people) {
-    let firstName = promptFor("What is the person's first name?", autoValid);
-    let lastName = promptFor("What is the person's last name?", autoValid);
+    let firstName = promptFor("What is the person's first name?", autoValid).toLowerCase();
+    let lastName = promptFor("What is the person's last name?", autoValid).toLowerCase();
 
     let foundPerson = people.filter(function (potentialMatch) {
-        if (potentialMatch.firstName === firstName && potentialMatch.lastName === lastName) {
+        if (potentialMatch.firstName.toLowerCase() === firstName && potentialMatch.lastName.toLowerCase() === lastName) {
             return true;
         }
         else {
@@ -80,8 +80,8 @@ function searchByCriteria(people) {
         criteriaResults = searchChoices(searchCriteria, people);
     } else {
         for (let i = 0; i < criteriaNumber; i++) {
-            searchCriterion.push(promptFor("Which criteria would you like to search for? Enter gender, eyecolor, height, weight, dob, occupation", validateSearchCriteria));
-            criterionInput.push(prompt("What is the person's " + searchCriterion[i]));
+            searchCriterion.push(promptFor("Which criteria would you like to search for? Enter gender, eyecolor, height, weight, dob, occupation", validateSearchCriteria).toLowerCase());
+            criterionInput.push(prompt("What is the person's " + searchCriterion[i])).toLowerCase();
         }
         criteriaResults = searchMultiples(searchCriterion, people, criterionInput);
     }
@@ -194,7 +194,7 @@ function searchMultiples(searchCriterion, people, input) {
 }
 
 function searchByGender(people) {
-    let gender = promptFor("What is the person's gender", validateGender);
+    let gender = promptFor("What is the person's gender", validateGender).toLowerCase();
 
     let genderResults = people.filter(function (potentialMatch) {
         if (potentialMatch.gender == gender) {
@@ -208,7 +208,7 @@ function searchByGender(people) {
 }
 
 function searchByDoB(people) {
-    let dob = promptFor("What is the person's dob?  Enter MM/DD/YYYY", autoValid);
+    let dob = promptFor("What is the person's dob?  Enter MM/DD/YYYY", autoValid).toLowerCase();
 
     let dobResults = people.filter(function (potentialMatch) {
         if (potentialMatch.dob == dob) {
@@ -222,7 +222,7 @@ function searchByDoB(people) {
 }
 
 function searchByHeight(people) {
-    let height = promptFor("What is the person's height?", validateNumber);
+    let height = promptFor("What is the person's height?", validateNumber).toLowerCase();
 
     let heightResults = people.filter(function (potentialMatch) {
         if (potentialMatch.height == height) {
@@ -236,7 +236,7 @@ function searchByHeight(people) {
 }
 
 function searchByWeight(people) {
-    let weight = promptFor("What is the person's weight", validateNumber);
+    let weight = promptFor("What is the person's weight", validateNumber).toLowerCase();
 
     let weightResults = people.filter(function (potentialMatch) {
         if (potentialMatch.weight == weight) {
@@ -250,7 +250,7 @@ function searchByWeight(people) {
 }
 
 function searchByEyeColor(people) {
-    let eyeColor = promptFor("What is the person's eyeColor", autoValid);
+    let eyeColor = promptFor("What is the person's eyeColor", autoValid).toLowerCase();
 
     let eyeColorResults = people.filter(function (potentialMatch) {
         if (potentialMatch.eyeColor == eyeColor) {
@@ -264,7 +264,7 @@ function searchByEyeColor(people) {
 }
 
 function searchByOccupation(people) {
-    let occupation = promptFor("What is the person's occupation", autoValid);
+    let occupation = promptFor("What is the person's occupation", autoValid).toLowerCase();
 
     let occupationResults = people.filter(function (potentialMatch) {
         if (potentialMatch.occupation == occupation) {
@@ -316,7 +316,7 @@ function displayDescendants(descendants) {
 function promptFor(question, valid) {
     do {
         var response = prompt(question).trim();
-    } while (!response || !valid(response));
+    } while (!response.toLowerCase() || !valid(response.toLowerCase()));
     return response;
 }
 
